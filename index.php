@@ -3,22 +3,21 @@ require 'connection.php';
 $name = '';
 $phone = '';
 $email = '';
-$service='';
-$interest='';
 
 if (isset($_POST['submit'])) {
 	$name = $_POST['name'];
    $phone = $_POST['phone'];
    $email = $_POST['email'];
-    
-   $query = "INSERT INTO customers(name,phone,email) 
-    values('$name','$phone','$email')";
+   $interstrs=$_POST['interested'];
+   $servicers=$_POST['offer'];
+   
+   $query = "INSERT INTO customers(name,phone,email,service_id,interest_id) 
+    values('$name','$phone','$email','$interstrs','$interstrs')";
 	 mysqli_query($conn, $query);
+    
     $name = '';
     $phone = '';
     $email = '';
-    $service='';
-    $interest='';
 }
 
 ?>
@@ -58,23 +57,30 @@ if (isset($_POST['submit'])) {
                   </div>
                    <div class="form-group">
                        <label for="Email">Email</label>
-                       <input type="email" name="email" value="<?php echo $email; ?>" required class="form-control my-input" id="email" placeholder="Email"> 
+                       <input type="email" name="email"  value="<?php echo $email; ?>" required class="form-control my-input" id="email" placeholder="Email"> 
                   </div>
                    <!-- checkbox hidden -->
                   <div class="form-group">
-                      <input type="checkbox" name="offer"  id="offer1" value="Offer 1">
-                       <input type="checkbox" name="offer" id="offer2"  value="Offer 2" >
-                       <input type="checkbox" name="offer" id="offer3"   value="Offer 3">
-                       <input type="checkbox" name="interested"  id="interested1" value="Within a Week" >
-                       <input type="checkbox" name="interested"  id="interested2" value="Month">
-                       <input type="checkbox" name="interested"  id="interested3" value="Not Interested">
+                        <?php
+                             $query  = "select * from servicers";
+                             $result = mysqli_query($conn, $query);
+                             while ($row = mysqli_fetch_assoc($result)) {
+                                echo ' <input type="checkbox" name="offer" hidden id="offer'.$row['id'] .'"  value="' . $row['id'] . '" />';
+                             }
+                       ?>
+                        <?php
+                            $query  = "select * from interstrs";
+                            $result = mysqli_query($conn, $query);
+                            while ($row = mysqli_fetch_assoc($result)) {
+                               echo ' <input type="checkbox" name="interested" hidden  id="interested'.$row['id'] .'" value="' . $row['id'] . '" />';
+                            }
+                       ?>
                     </div>
                     <!-- End checkbox  -->
                   <div class="text-center ">
                      <button  name="Next" class="btn btn-block g-button" id="btn" >Next</button>
                      <br>
-                     <button type="submit" name="submit" class="btn btn-block g-button" style="background-color:#2f6d6b !important;    margin-top: 1rem;">Send</button>
-                  <?php if((!empty($_POST['offer'])|| !empty($_POST['interested']))&&(isset($_POST['offer'])|| isset($_POST['interested']))) { echo "Send DataBase"; }?>
+                     <button type="submit" name="submit" class="btn btn-block g-button" style="background-color:#512570 !important;    margin-top: 1rem;">Send</button>
                      </div>
                </form>
             </div>
@@ -88,23 +94,23 @@ if (isset($_POST['submit'])) {
 <script src="jquery-3.6.0.min.js"></script>
 <script >
      function checkOne() {
-     document.getElementById("offer1").checked = true;
+          document.getElementById("offer1").checked = true;
       } 
      function checkTwo() {
-     document.getElementById("offer2").checked = true;
-     }
+           document.getElementById("offer2").checked = true;
+      }
      function checkThree() {
-     document.getElementById("offer3").checked = true;
-    }
+           document.getElementById("offer3").checked = true;
+      }
      function checkFour() {
-      document.getElementById("interested1").checked = true;
-    }
+            document.getElementById("interested1").checked = true;
+      }
      function checkFive() {
-      document.getElementById("interested2").checked = true;
-    }
+            document.getElementById("interested2").checked = true;
+      }
      function checkSix() {
-      document.getElementById("interested3").checked = true;
-    }
+             document.getElementById("interested3").checked = true;
+      }
     $(function(){
             $('#btn').click(function(e){
                var valid=this.form.checkValidity();
@@ -117,9 +123,9 @@ if (isset($_POST['submit'])) {
                          cancelButton: 'btn btn-danger-pop',
                        },
                        html: "<h4>Please select the services that you are interested in</h4>" +"<br>" +
-                       '<input class="btn g-button-pop" type="checkbox" onclick="checkOne()" value="Offer 1"> ' +
-                       '<input class="btn g-button-pop" type="checkbox" onclick="checkTwo()" value="Offer 2">'+ 
-                       '<input class="btn g-button-pop" type="checkbox" onclick="checkThree()" value="Offer 3">' + '<br>',
+                       '<input class="btn g-button-pop" type="button" onclick="checkOne()" value="Offer 1"> ' +
+                       '<input class="btn g-button-pop" type="button" onclick="checkTwo()" value="Offer 2">'+ 
+                       '<input class="btn g-button-pop" type="button" onclick="checkThree()" value="Offer 3">' + '<br>',
                        showCancelButton: true,
                        confirmButtonText:'Send',
                        cancelButtonText:'Close',
