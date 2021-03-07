@@ -1,0 +1,64 @@
+.g-button{
+color: #fff !important;
+border: 1px solid #54C7C3;
+background: #54C7C3 !important;
+width:100%;
+font-weight: 600;
+color:#fff;
+padding: 8px 25px;
+}
+.my-input{
+box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+cursor: text;
+padding: 8px 10px;
+transition: border .1s linear;
+margin: 1rem 0;
+}
+.logo{
+margin-top: 6rem;
+margin-bottom: 2rem;
+}
+/*--thank you pop starts here--*/
+.g-button-pop {
+    color: #fff !important;
+    border: 1px solid #54C7C3;
+    background: #54C7C3 !important;
+    font-weight: 600;
+    color: #fff;
+    margin: 0.2rem !important;
+    padding: 8px 25px;
+}
+.btn-next{
+  color: #fff !important;
+  border: 1px solid #327471;
+  background: #327471 !important;
+  font-weight: 600;
+  width: 100%;
+  color: #fff;
+  margin: 0.2rem !important;
+  padding: 8px 25px;
+}
+.btn-danger-pop {
+     color: #fff !important;
+     border: 1px solid #f71e1e;
+     background: #f71e1e !important;
+     font-weight: 600;
+     color: #fff;
+     margin: 2rem !important;
+     padding: 8px 25px;
+     position: relative;
+     left: 10rem;
+}
+
+@media(max-width:510px) {
+    .btn-danger-pop {
+        left: 4rem;
+        background-color: rgba(218, 51, 22, 0.89) !important;
+    }
+}
+@media(max-width:336px) {
+    .btn-danger-pop {
+      left: 0rem;
+      width: 100%;
+    }
+}
